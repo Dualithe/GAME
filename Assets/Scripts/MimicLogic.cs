@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MimicLogic : MonoBehaviour
 {
 
-    [SerializeField] private GameObject[] listOfHUDSprites;
+    [SerializeField] private GameObject[] slots;
     [SerializeField] public Sprite hudSprite;
     [SerializeField] public GameObject player;
     [SerializeField] public GameObject hud;
@@ -17,11 +17,33 @@ public class MimicLogic : MonoBehaviour
     public GridGenerate gen;
     private bool disabled;
 
+    [SerializeField] private Sprite[] diceSprites;
+
+    int diceFrame = 0;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
         gen = GameObject.FindWithTag("Generator").GetComponent<GridGenerate>();
         updateHUD();
+    }
+
+    public void SetChunkToUnlock(ChunkGenData chunk) {
+        chunkToUnlock = chunk;
+        StartCoroutine(PlayDiceAnimation());
+    }
+
+    private IEnumerator PlayDiceAnimation() {
+        while(true) {
+            diceFrame = (diceFrame + 1) % 6;
+            for (int i = 0; i < slots.Length; ++i) {
+                if (i >= requiredItems.Count) {
+                    var diceId = chunkToUnlock.reqItems[i].id;
+                    slots[i].transform.GetChild(0).GetComponent<Image>().sprite = diceSprites[diceId * 6 + (diceFrame + i) % 6];
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private void Update()
@@ -53,6 +75,8 @@ public class MimicLogic : MonoBehaviour
         }
         if (item.name == chunkToUnlock.reqItems[requiredItems.Count].name)
         {
+            var renderer = slots[requiredItems.Count].transform.GetChild(0).GetComponent<Image>();
+            renderer.color = new Color(0.5f, 0.5f, 0.5f, 0.8f);
             requiredItems.Add(item);
 
             if (requiredItems.Count == chunkToUnlock.reqItems.Count)
@@ -68,19 +92,20 @@ public class MimicLogic : MonoBehaviour
 
     private void updateHUD()
     {
-        for (int i = 0; i < listOfHUDSprites.Length; i++)
-        {
-            if (i < requiredItems.Count)
-            {
-                listOfHUDSprites[i].GetComponent<Image>().sprite = chunkToUnlock.reqItems[i].sprite;
-                listOfHUDSprites[i].GetComponent<Image>().color = chunkToUnlock.reqItems[i].color;
-            }
-            else
-            {
-                listOfHUDSprites[i].GetComponent<Image>().sprite = hudSprite;
-                listOfHUDSprites[i].GetComponent<Image>().color = Color.white;
-            }
-        }
+        // for (int i = 0; i < slots.Length; i++)
+        // {
+        //     var diceId = chunkToUnlock.reqItems[i].id;
+        //     if (i < requiredItems.Count)
+        //     {
+        //         slots[i].GetComponent<Image>().sprite = diceSprites[diceId * 6];
+        //         // slots[i].GetComponent<Image>().color = chunkToUnlock.reqItems[i].color;
+        //     }
+        //     else
+        //     {
+        //         slots[i].GetComponent<Image>().sprite = hudSprite;
+        //         // slots[i].GetComponent<Image>().color = Color.white;
+        //     }
+        // }
     }
 
     private void manageHUD()

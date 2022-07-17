@@ -222,7 +222,7 @@ public class GridGenerate : MonoBehaviour
         var neighbours = cnp.PushChunkAndGetPossibleNeighbours(firstChunk, newMimics.Count);
         for (int i = 0; i < newMimics.Count; i++)
         {
-            newMimics[i].chunkToUnlock = neighbours[i];
+            newMimics[i].SetChunkToUnlock(neighbours[i]);
         }
     }
 
