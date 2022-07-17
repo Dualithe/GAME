@@ -21,9 +21,6 @@ MonoBehaviour:
     minAmount: 3
     maxAmount: 8
   neighbours:
-  - chunkData: {fileID: 11400000, guid: 15cd7dd9961d87f449d79330267a68e4, type: 2}
-    ratio: 1
-    amount: 0
   - chunkData: {fileID: 11400000, guid: f179ef4bfe443314fae92dadd08a3e20, type: 2}
     ratio: 1
     amount: 0

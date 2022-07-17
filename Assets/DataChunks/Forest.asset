@@ -27,16 +27,7 @@ MonoBehaviour:
   - chunkData: {fileID: 11400000, guid: ecd19d216302b8a4985dfaeefc0636fc, type: 2}
     ratio: 1
     amount: 0
-  - chunkData: {fileID: 11400000, guid: 15cd7dd9961d87f449d79330267a68e4, type: 2}
-    ratio: 1
-    amount: 1
-  - chunkData: {fileID: 11400000, guid: 3105f7f7071c75149b47aef8130e4d49, type: 2}
-    ratio: 1
-    amount: 0
   - chunkData: {fileID: 11400000, guid: c33161969ad346e4a8f4303143a1f8d6, type: 2}
-    ratio: 1
-    amount: 0
-  - chunkData: {fileID: 11400000, guid: f179ef4bfe443314fae92dadd08a3e20, type: 2}
     ratio: 1
     amount: 0
   reqItems:
