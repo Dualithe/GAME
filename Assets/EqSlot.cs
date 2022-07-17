@@ -21,8 +21,8 @@ public class EqSlot : MonoBehaviour
         {
             dicePlates.gameObject.SetActive(true);
             dice.gameObject.SetActive(true);
-            dicePlates.sprite = dicePlateImages[it.id / 6 + it.value];
-            dice.sprite = diceImages[it.id / 6];
+            dicePlates.sprite = dicePlateImages[it.id * 6 + it.value];
+            dice.sprite = diceImages[it.id * 6];
         }
         dark.gameObject.SetActive(!selected);
     }
