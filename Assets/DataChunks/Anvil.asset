@@ -13,9 +13,36 @@ MonoBehaviour:
   m_Name: Anvil
   m_EditorClassIdentifier: 
   id: c2f9a1cdadbe8a247b5d4a1a5e95f581
-  structures: []
+  structures:
+  - structurePrefab: {fileID: 7728180678035521025, guid: aa86e90f1c05bef41833c0edb66ed8ec, type: 3}
+    minAmount: 1
+    maxAmount: 1
+  - structurePrefab: {fileID: 5767769956291625207, guid: 164895a0b24e72c4d9af2854183b95db, type: 3}
+    minAmount: 3
+    maxAmount: 8
+  - structurePrefab: {fileID: 5767769956291625207, guid: 937df629fcc4fdb46b3e190497b1baf9, type: 3}
+    minAmount: 6
+    maxAmount: 23
   neighbours:
   - chunkData: {fileID: 11400000, guid: 15cd7dd9961d87f449d79330267a68e4, type: 2}
+    ratio: 2
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: c33161969ad346e4a8f4303143a1f8d6, type: 2}
+    ratio: 2
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: f179ef4bfe443314fae92dadd08a3e20, type: 2}
+    ratio: 2
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: 438618aafc1f8dc4588e552536931790, type: 2}
     ratio: 1
     amount: 0
-  reqItems: []
+  - chunkData: {fileID: 11400000, guid: 0aa5f2b6a0a32ca4198e5b4250f2165b, type: 2}
+    ratio: 1
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: ecd19d216302b8a4985dfaeefc0636fc, type: 2}
+    ratio: 1
+    amount: 0
+  reqItems:
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}

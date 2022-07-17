@@ -13,11 +13,32 @@ MonoBehaviour:
   m_Name: Furnace
   m_EditorClassIdentifier: 
   id: 0aa5f2b6a0a32ca4198e5b4250f2165b
-  structures: []
+  structures:
+  - structurePrefab: {fileID: 7728180678035521025, guid: 3f86cff3c0928a1428a7bccdf2f0217f, type: 3}
+    minAmount: 1
+    maxAmount: 1
+  - structurePrefab: {fileID: 5767769956291625207, guid: 164895a0b24e72c4d9af2854183b95db, type: 3}
+    minAmount: 4
+    maxAmount: 8
+  - structurePrefab: {fileID: 5767769956291625207, guid: 937df629fcc4fdb46b3e190497b1baf9, type: 3}
+    minAmount: 0
+    maxAmount: 5
+  - structurePrefab: {fileID: 5767769956291625207, guid: 1a86906f2577e8e429f23a9a75710a79, type: 3}
+    minAmount: 4
+    maxAmount: 8
   neighbours:
   - chunkData: {fileID: 11400000, guid: 669cc3b2d8b279c4ea268180dca9d6b8, type: 2}
     ratio: 1
     amount: 0
+  - chunkData: {fileID: 11400000, guid: f179ef4bfe443314fae92dadd08a3e20, type: 2}
+    ratio: 1
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: 15cd7dd9961d87f449d79330267a68e4, type: 2}
+    ratio: 1
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: c33161969ad346e4a8f4303143a1f8d6, type: 2}
+    ratio: 1
+    amount: 1
   reqItems:
   - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
   - {fileID: 11400000, guid: 5b7ebc5b76fbf704b8a0bd603602ad85, type: 2}

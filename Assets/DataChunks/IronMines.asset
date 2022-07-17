@@ -13,12 +13,24 @@ MonoBehaviour:
   m_Name: IronMines
   m_EditorClassIdentifier: 
   id: 669cc3b2d8b279c4ea268180dca9d6b8
-  structures: []
+  structures:
+  - structurePrefab: {fileID: 5767769956291625207, guid: 164895a0b24e72c4d9af2854183b95db, type: 3}
+    minAmount: 9
+    maxAmount: 20
+  - structurePrefab: {fileID: 5767769956291625207, guid: 937df629fcc4fdb46b3e190497b1baf9, type: 3}
+    minAmount: 3
+    maxAmount: 8
   neighbours:
   - chunkData: {fileID: 11400000, guid: 15cd7dd9961d87f449d79330267a68e4, type: 2}
     ratio: 1
     amount: 0
+  - chunkData: {fileID: 11400000, guid: f179ef4bfe443314fae92dadd08a3e20, type: 2}
+    ratio: 1
+    amount: 0
+  - chunkData: {fileID: 11400000, guid: 3105f7f7071c75149b47aef8130e4d49, type: 2}
+    ratio: 1
+    amount: 1
   reqItems:
-  - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
-  - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
-  - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+  - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
