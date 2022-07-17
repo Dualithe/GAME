@@ -8,11 +8,19 @@ public class Pickup : MonoBehaviour
     private Backpack bp;
 
     private Collider2D cl;
+
+    [SerializeField] private Sprite[] diceSprites;
+    [SerializeField] private Sprite[] dicePlateSprites;
+
+    [SerializeField] private SpriteRenderer plate;
+    private SpriteRenderer dice;
+
     private void Awake()
     {
         bp = GameObject.FindWithTag("Backpack").GetComponent<Backpack>();
         cl = GetComponent<Collider2D>();
-
+        dice = GetComponent<SpriteRenderer>();
+        cl.isTrigger = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -39,9 +47,12 @@ public class Pickup : MonoBehaviour
 
     public void setItem(Item i)
     {
-        var x = GetComponent<SpriteRenderer>();
+        // var x = GetComponent<SpriteRenderer>();
         item = i;
-        x.color = item.color;
-        x.sprite = item.sprite;
+        plate.sprite = dicePlateSprites[i.id * 6 + i.value];
+        dice.sprite = diceSprites[i.id * 6];
+        
+        // x.color = item.color;
+        // x.sprite = item.sprite;
     }
 }

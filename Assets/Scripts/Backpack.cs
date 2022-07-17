@@ -28,7 +28,7 @@ public class Backpack : MonoBehaviour
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = alpha;
 
         updateHUD();
-        pm.UpdateCube(getHoveredItem());
+        // pm.UpdateCube(getHoveredItem());
     }
 
     public bool AddToEq(Item item)
@@ -36,7 +36,6 @@ public class Backpack : MonoBehaviour
         if (eq.Count < 6)
         {
             eq.Add(item);
-            item.value = Random.Range(0, 5);
             updateHUD();
             return true;
         }
@@ -57,7 +56,7 @@ public class Backpack : MonoBehaviour
         {
             children[i].GetComponent<EqSlot>().setItem(i < eq.Count ? eq[i] : null, i == hovered);
         }
-        pm.UpdateCube(getHoveredItem());
+        pm?.UpdateCube(getHoveredItem());
     }
 
     private void Update()

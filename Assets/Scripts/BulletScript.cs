@@ -11,10 +11,21 @@ public class BulletScript : MonoBehaviour
     private bool firstEntered = false;
     private Vector2 direction;
     private Rigidbody2D rb;
+
+    [SerializeField] private Sprite[] diceSprites;
+
+    private SpriteRenderer spr;
+
+    int diceFrame = 0;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(direction * bulletForce, ForceMode2D.Impulse);
+    }
+
+    private void Awake() {        
+        spr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -26,6 +37,15 @@ public class BulletScript : MonoBehaviour
             pck.setVelocity(Vector2.zero);
             pck.GetComponent<Collider2D>().isTrigger = false;
             Destroy(gameObject);
+        }
+    }
+    
+    IEnumerator PlayDiceAnimation() {
+        diceFrame = 0;
+        while (true) {
+            diceFrame = (diceFrame + 1) % 6;
+            spr.sprite = diceSprites[item.id * 6 + diceFrame];
+            yield return new WaitForSeconds(0.03f);
         }
     }
 
@@ -56,6 +76,7 @@ public class BulletScript : MonoBehaviour
     public void setItem(Item i)
     {
         item = i;
+        StartCoroutine(PlayDiceAnimation());
     }
 
     public Item getItem()
