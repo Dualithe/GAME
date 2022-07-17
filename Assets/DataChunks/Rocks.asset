@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Rocks
   m_EditorClassIdentifier: 
   id: 15cd7dd9961d87f449d79330267a68e4
-  structures: []
+  structures:
+  - structurePrefab: {fileID: 5767769956291625207, guid: 937df629fcc4fdb46b3e190497b1baf9, type: 3}
+    minAmount: 7
+    maxAmount: 34
   neighbours:
   - chunkData: {fileID: 11400000, guid: 96bb9d92b90bdf24d991107fbc968c6c, type: 2}
     ratio: 1
