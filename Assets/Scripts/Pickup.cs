@@ -20,12 +20,24 @@ public class Pickup : MonoBehaviour
         bp = GameObject.FindWithTag("Backpack").GetComponent<Backpack>();
         cl = GetComponent<Collider2D>();
         dice = GetComponent<SpriteRenderer>();
-        cl.isTrigger = false;
+        // cl.isTrigger = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         cl.isTrigger = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            bool added = bp.AddToEq(item);
+            if (added)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

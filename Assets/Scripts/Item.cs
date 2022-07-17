@@ -36,8 +36,8 @@ public class Item : ScriptableObject
         var dicePickup = Instantiate(pickupPrefab, pos, Quaternion.identity);
         float randomAngle = Random.Range(0, 2 * Mathf.PI);
         var vec = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
-        dicePickup.GetComponent<Rigidbody2D>().AddForce(vec * dropForce, ForceMode2D.Impulse);
-        value = Random.Range(0, 5);
+        dicePickup.GetComponent<Rigidbody2D>().AddForce(vec * Random.Range(dropForce * 0.8f, dropForce), ForceMode2D.Impulse);
+        value = Random.Range(0, 6);
         dicePickup.setItem(this);
         return dicePickup;
     }

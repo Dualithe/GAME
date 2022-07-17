@@ -67,7 +67,7 @@ public class GridGenerate : MonoBehaviour
         generateStructures(0, 0, firstChunk);
         spawnPlayer();
         placeWalls(0, 0);
-        spawnMimics(0, 0);
+        spawnMimics(0, 0, firstChunk);
     }
     void GenerateGrid(int offX, int offY)
     {
@@ -150,8 +150,6 @@ public class GridGenerate : MonoBehaviour
 
     void placeWalls(int offX, int offY)
     {
-
-
         Vector2[] xD ={new Vector2(1,0),
         new Vector2(0,1),
         new Vector2(1,1),
@@ -170,10 +168,7 @@ public class GridGenerate : MonoBehaviour
                 w.GetComponent<BoxCollider2D>().size = chunkSize;
                 walls.Add(lol, w);
             }
-
         }
-
-
     }
 
     public void buyLand(int dirX, int dirY, ChunkGenData chunkData)
@@ -187,10 +182,10 @@ public class GridGenerate : MonoBehaviour
             Destroy(walls[new Vector2(dirX, dirY)].gameObject);
             walls.Remove(new Vector2(dirX, dirY));
         }
-        spawnMimics(dirX, dirY);
+        spawnMimics(dirX, dirY, chunkData);
     }
 
-    private void spawnMimics(int dirX, int dirY)
+    private void spawnMimics(int dirX, int dirY, ChunkGenData chunkData)
     {
         Vector2[] xD ={new Vector2(1,0),
         new Vector2(0,1),
@@ -219,7 +214,7 @@ public class GridGenerate : MonoBehaviour
                 mimics.Remove(mimicKey);
             }
         }
-        var neighbours = cnp.PushChunkAndGetPossibleNeighbours(firstChunk, newMimics.Count);
+        var neighbours = cnp.PushChunkAndGetPossibleNeighbours(chunkData, newMimics.Count);
         for (int i = 0; i < newMimics.Count; i++)
         {
             newMimics[i].SetChunkToUnlock(neighbours[i]);

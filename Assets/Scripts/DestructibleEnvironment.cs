@@ -27,7 +27,6 @@ public class DestructibleEnvironment : MonoBehaviour
 
         if (durability <= 0 && isAlive)
         {
-
             dropItems();
             Destroy(gameObject);
             isAlive = false;

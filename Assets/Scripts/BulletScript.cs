@@ -8,9 +8,12 @@ public class BulletScript : MonoBehaviour
     [SerializeField] private float bulletForce;
     private int levelOfDice;
     private Item item;
-    private bool firstEntered = false;
     private Vector2 direction;
     private Rigidbody2D rb;
+
+    private List<int> structuresDamaged = new List<int>();
+
+    private Vector2 prevVelocity;
 
     [SerializeField] private Sprite[] diceSprites;
 
@@ -20,16 +23,17 @@ public class BulletScript : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(direction * bulletForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * Random.Range(bulletForce * 0.7f, bulletForce * 0.9f), ForceMode2D.Impulse);
     }
 
     private void Awake() {        
+        rb = GetComponent<Rigidbody2D>();
         spr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
+        prevVelocity = rb.velocity;
         bulletLifetime -= Time.deltaTime;
         if (bulletLifetime <= 0)
         {
@@ -56,21 +60,22 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!firstEntered)
-        {
-            rb.velocity = Vector3.Reflect(transform.position, collision.contacts[0].normal) * 0.2f;
-            if (collision.gameObject.CompareTag("struct") && item.tier == 0 && collision.gameObject.GetComponent<DestructibleEnvironment>().name.Contains("Fire"))
-            {
-                collision.gameObject.GetComponent<DestructibleEnvironment>().lowerDurability(999999);
-                if (!item.isAlive()) Destroy(gameObject);
+        rb.velocity = Vector3.Reflect(prevVelocity, collision.GetContact(0).normal) * 0.9f;
+        if (collision.gameObject.CompareTag("struct")) {
+            var structId = collision.gameObject.GetInstanceID();
+            var env = collision.gameObject.GetComponent<DestructibleEnvironment>();
+            if (!structuresDamaged.Contains(structId)) {
+                structuresDamaged.Add(structId);
+                if (item.tier == 0 && env.name.Contains("Fire")) {
+                    env.lowerDurability(999999);
+                }
+                else if (item.tier >= env.structTier) {
+                    env.lowerDurability(item.value+1);
+                    item.subbDurability();
+                    if (!item.isAlive()) Destroy(gameObject);
+                }
+                
             }
-            if (collision.gameObject.CompareTag("struct") && item.tier >= collision.gameObject.GetComponent<DestructibleEnvironment>().structTier)
-            {
-                collision.gameObject.GetComponent<DestructibleEnvironment>().lowerDurability(item.value+1);
-                item.subbDurability();
-                if (!item.isAlive()) Destroy(gameObject);
-            }
-            firstEntered = true;
         }
     }
     public void setItem(Item i)

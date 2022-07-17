@@ -73,8 +73,7 @@ public class ChunkNeighboursProvider
 
     private int GetIndexFromRatio(List<int> ratio)
     {
-        if (ratio.Count == 0)
-        {
+        if (ratio.Count == 0) {
             return -1;
         }
         var idxes = ratio.Select((r, i) => Enumerable.Repeat(i, r)).SelectMany(l => l).ToList();
