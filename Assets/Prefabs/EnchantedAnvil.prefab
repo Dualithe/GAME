@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.12}
+  m_AnchoredPosition: {x: 0, y: 0.14}
   m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5944793155729841321
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &5265859859689933883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,8 +666,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3920227213809081298}
   - component: {fileID: 2186643879195511033}
-  - component: {fileID: 6610085406602453091}
   - component: {fileID: 5831793298570052522}
+  - component: {fileID: 9142531760674799225}
+  - component: {fileID: 1482828272345407331}
   m_Layer: 8
   m_Name: EnchantedAnvil
   m_TagString: Untagged
@@ -684,7 +685,7 @@ Transform:
   m_GameObject: {fileID: 7728180678035521025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9, y: 9, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 3441063736077300809}
   m_Father: {fileID: 0}
@@ -730,33 +731,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.1764706, g: 0.16862746, b: 0.3803922, a: 1}
+  m_Sprite: {fileID: -2331405896454041192, guid: d5ad91c1429c2eb4fb3fdf37ce26c050, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_DrawMode: 1
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &6610085406602453091
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7728180678035521025}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.080000006
 --- !u!114 &5831793298570052522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +764,18 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 28648167252c96e49b103626fd64b045, type: 2}
     - {fileID: 11400000, guid: 28648167252c96e49b103626fd64b045, type: 2}
     - {fileID: 11400000, guid: 28648167252c96e49b103626fd64b045, type: 2}
+  - result: {fileID: 11400000, guid: 22f31853b1183ba46a6358d396f399a7, type: 2}
+    recipe:
+    - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+    - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+    - {fileID: 11400000, guid: 59f6877d9833a944dac7453eee5f5521, type: 2}
+  - result: {fileID: 11400000, guid: 3eda0edac85c71048a12959836e96aa4, type: 2}
+    recipe:
+    - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
+    - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
+    - {fileID: 11400000, guid: 0705f4aa1e8f4aa4eb2270c67922725b, type: 2}
   hud: {fileID: 453271927395712141}
+  enchantedAnvil: {fileID: 0}
   hudItems:
   - {fileID: 7434340371047944197}
   - {fileID: 6293057919267035654}
@@ -787,3 +783,43 @@ MonoBehaviour:
   hudSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   playerPos: 0
   player: {fileID: 0}
+--- !u!114 &9142531760674799225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728180678035521025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9ce8bc0d789014dbcb57f8e7668e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 1
+  radius: 1
+--- !u!61 &1482828272345407331
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7728180678035521025}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.24, y: 0.24}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

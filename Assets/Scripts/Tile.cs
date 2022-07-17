@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private Sprite[] spr;
     [SerializeField] private GameObject _highlight;
     [SerializeField] private bool isVacant;
 
@@ -14,7 +15,8 @@ public class Tile : MonoBehaviour
         isVacant = true;
         _baseColor.a = 1;
         _offsetColor.a = 1;
-        _renderer.color = isOffset ? _offsetColor : _baseColor;
+        //_renderer.color = isOffset ? _offsetColor : _baseColor;
+        _renderer.sprite = spr[Random.Range(0, 7)];
     }
 
     private void OnMouseEnter()

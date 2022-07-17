@@ -7,9 +7,11 @@ public class Backpack : MonoBehaviour
 {
     [SerializeField] public List<Item> eq = new List<Item>();
     [SerializeField] private GameObject uiBackpack;
+    [SerializeField] private Sprite none;
     [SerializeField] private Transform parentOfDrops;
-    [SerializeField] private new List<Text> children;
+    [SerializeField] private new List<GameObject> children;
     private int hovered = 0;
+    public PlayerMovement pm;
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class Backpack : MonoBehaviour
             eq[i].Init();
         }
 
+        //pm = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         var alpha = uiBackpack.transform.GetChild(0).GetComponent<Image>().color;
         alpha.a += 0.25f;
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = alpha;
@@ -31,6 +34,7 @@ public class Backpack : MonoBehaviour
         if (eq.Count < 6)
         {
             eq.Add(item);
+            item.value = Random.Range(0, 5);
             updateHUD();
             return true;
         }
@@ -46,18 +50,24 @@ public class Backpack : MonoBehaviour
 
     public void updateHUD()
     {
+
         for (int i = 0; i < children.Count; i++)
         {
-            if (i < eq.Count)
-            {
-                children[i].text = eq[i].name;
-            }
-            else children[i].text = "X";
+            children[i].GetComponent<EqSlot>().setItem(i < eq.Count ? eq[i] : null);
         }
     }
 
     private void Update()
     {
+        if (getHoveredItem() != null)
+        {
+            pm.isHolding(true);
+        }
+        else
+        {
+            pm.isHolding(false);
+        }
+
         if (Input.GetKeyDown("q") && hovered > 0)
         {
             changeHovered(-1);

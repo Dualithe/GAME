@@ -19,6 +19,7 @@ public class AnvilLogic : MonoBehaviour
     [SerializeField] private Backpack bp;
     [SerializeField] private List<Recipe> recipes;
     [SerializeField] public GameObject hud;
+    [SerializeField] public GameObject enchantedAnvil;
     [SerializeField] public GameObject[] hudItems;
     [SerializeField] public Sprite hudSprite;
     private List<Item> storedInAnvil = new List<Item>();
@@ -84,9 +85,23 @@ public class AnvilLogic : MonoBehaviour
 
                     if (storedInAnvil.Count == rec.recipe.Count)
                     {
-                        var it = ScriptableObject.Instantiate(rec.result);
-                        it.Init();
-                        it.createPickup(transform.position);
+                        if (rec.result != null)
+                        {
+                            var it = ScriptableObject.Instantiate(rec.result);
+                            it.Init();
+                            it.createPickup(transform.position);
+                        }
+                        else
+                        {
+                            foreach (Item itm in storedInAnvil)
+                            {
+                                var it = ScriptableObject.Instantiate(itm);
+                                it.Init();
+                                it.createPickup(transform.position);
+                            }
+                            Instantiate(enchantedAnvil, transform.position, Quaternion.identity);
+                            Destroy(gameObject);
+                        }
                         storedInAnvil.Clear();
                     }
                     checkIfHUDUpdated();

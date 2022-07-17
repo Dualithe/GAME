@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Chunk
 {
@@ -43,15 +44,18 @@ public class GridGenerate : MonoBehaviour
 
     [SerializeField] private Vector2 chunkSize;
 
+    [SerializeField] private ChunkGenData firstChunk;
+
     private Vector2 tileSize;
 
-
+    private ChunkNeighboursProvider cnp = new ChunkNeighboursProvider();
 
     private Dictionary<Vector2, Tile> _tiles;
 
     void Start()
     {
         _tiles = new Dictionary<Vector2, Tile>();
+        tileSize = (_tilePrefab.GetComponent<SpriteRenderer>().size * _tilePrefab.transform.localScale);
         GenerateGrid(0, 0);
         chunks.Add(new Vector2(0, 0));
         var firstTile = _tiles[new Vector2(0, 0)];
@@ -59,12 +63,10 @@ public class GridGenerate : MonoBehaviour
         chunkSize = firstTile.transform.position - lastTile.transform.position;
         chunkSize.x = Mathf.Abs(chunkSize.x);
         chunkSize.y = Mathf.Abs(chunkSize.y);
-        tileSize = (_tilePrefab.GetComponent<SpriteRenderer>().size * _tilePrefab.transform.localScale);
         chunkSize += tileSize;
-        generateStructures(0, 0, _listOfObjects, _howManyObjects);
+        generateStructures(0, 0, firstChunk);
         spawnPlayer();
         placeWalls(0, 0);
-        buyLand(1, 0);
         spawnMimics(0, 0);
     }
     void GenerateGrid(int offX, int offY)
@@ -76,8 +78,8 @@ public class GridGenerate : MonoBehaviour
         {
             for (int y = 0; y < _height; y++)
             {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x + offX, y + offY), Quaternion.identity, parentOfGrid.transform);
-                spawnedTile.name = $"Tile {x}{y}";
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3((x + offX)*tileSize.x, (y + offY)*tileSize.y), Quaternion.identity, parentOfGrid.transform);
+                spawnedTile.name = $"Tile {x}.{y}";
 
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
@@ -100,13 +102,14 @@ public class GridGenerate : MonoBehaviour
         return null;
     }
 
-    void generateStructures(int offX, int offY, GameObject[] listOfObj, float[] howManyObj)
+    void generateStructures(int offX, int offY, ChunkGenData chunkData)
     {
-        for (int i = 0; i < listOfObj.Length; i++)
+        var structures = chunkData.structures.OrderBy(s => s.structurePrefab.GetComponent<Structure>().priority).ToList();
+        foreach (var structure in structures)
         {
-            var ammount = howManyObj[i];
-            var typeOf = listOfObj[i];
-            createObject(typeOf, ammount, offX, offY);
+            int amount = UnityEngine.Random.Range(structure.minAmount, structure.maxAmount);
+            var typeOf = structure.structurePrefab;
+            createObject(typeOf, amount, offX, offY, structure.structurePrefab.GetComponent<Structure>().radius);
         }
     }
 
@@ -121,19 +124,19 @@ public class GridGenerate : MonoBehaviour
                 var k = GetTileAtPos(new Vector2(x + offX * _width, y + offY * _height));
                 if (k != null && k.getVacant())
                 {
-                    listOfTiles.Add(new Vector2(x + offX * _width, y + offY * _height));
+                    listOfTiles.Add(new Vector2(x, y));
                 }
             }
         }
         return listOfTiles;
     }
-    void createObject(GameObject typeOf, float ammount, int offX, int offY)
+    void createObject(GameObject typeOf, float ammount, int offX, int offY, int radius)
     {
         for (int i = 0; i < ammount; i++)
         {
-            var vacantCoords = getAllEmptyTiles(offX, offY);
+            var vacantCoords = getAllEmptyTiles(offX, offY).Where(v => v.x > radius - 1 && v.y > radius - 1 && v.x < _width - radius && v.y < _height - radius).ToList();
             var myCoords = vacantCoords[UnityEngine.Random.Range(0, vacantCoords.Count - 1)];
-            var currObj = Instantiate(typeOf, new Vector3(myCoords.x, myCoords.y, 0), Quaternion.identity, parentOfStruct.transform);
+            var currObj = Instantiate(typeOf, new Vector3((myCoords.x + offX * _width)*tileSize.x, (myCoords.y + offY * _height) * tileSize.y - tileSize.y*0.6f, 0), Quaternion.identity, parentOfStruct.transform);
             currObj.GetComponent<SpriteRenderer>().sortingOrder = 0;
             GetTileAtPos(myCoords).setVacant(false);
         }
@@ -173,11 +176,11 @@ public class GridGenerate : MonoBehaviour
 
     }
 
-    void buyLand(int dirX, int dirY)
+    public void buyLand(int dirX, int dirY, ChunkGenData chunkData)
     {
         GenerateGrid(dirX, dirY);
         chunks.Add(new Vector2(dirX, dirY));
-        generateStructures(dirX, dirY, _listOfObjects, _howManyObjects);
+        generateStructures(dirX, dirY, chunkData);
         placeWalls(dirX, dirY);
         if (walls.ContainsKey(new Vector2(dirX, dirY)))
         {
@@ -196,6 +199,9 @@ public class GridGenerate : MonoBehaviour
         };
         var chunkIdx = new Vector2(dirX, dirY);
         int leftChunkKey = Cantor(chunkIdx);
+
+        List<MimicLogic> newMimics = new List<MimicLogic>();
+
         foreach (Vector2 off in xD)
         {
             int rightChunkKey = Cantor(chunkIdx + off);
@@ -204,12 +210,19 @@ public class GridGenerate : MonoBehaviour
             {
                 var w = Instantiate(mimicPrefab, transform.position + (Vector3)(chunkIdx * chunkSize + chunkSize / 2 - tileSize / 2 + off * chunkSize / 2), Quaternion.identity, parentOfWall.transform);
                 mimics.Add(mimicKey, w);
+                newMimics.Add(w.GetComponent<MimicLogic>());
+                w.GetComponent<MimicLogic>().chunkIdx = chunkIdx + off;
             }
             else
             {
                 Destroy(mimics[mimicKey].gameObject);
                 mimics.Remove(mimicKey);
             }
+        }
+        var neighbours = cnp.PushChunkAndGetPossibleNeighbours(firstChunk, newMimics.Count);
+        for (int i = 0; i < newMimics.Count; i++)
+        {
+            newMimics[i].chunkToUnlock = neighbours[i];
         }
     }
 

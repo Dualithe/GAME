@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: IronDiceItem
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: -7049295537494616724, guid: 0bbd808cd3a9ba044b773908dc2d8f77, type: 3}
-  pickupPrefab: {fileID: 3189098669740269285, guid: 47812302622d8e14ca59c966da8693e6, type: 3}
+  pickupPrefab: {fileID: 3189098669740269285, guid: 0e7681d4181b0a14caf1f3e5e4a2a242, type: 3}
   maxDurability: 8
   dropForce: 4
   tier: 4
+  value: 1
+  id: 4
   name: IronDiceItem
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  color: {r: 0.27058825, g: 0.20784315, b: 0.16862746, a: 0}
+  sprite: {fileID: -6161035804578702525, guid: 999111efddef8dc468d2664fcc242292, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}

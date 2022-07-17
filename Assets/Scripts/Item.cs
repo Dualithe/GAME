@@ -10,6 +10,8 @@ public class Item : ScriptableObject
     [SerializeField] public int maxDurability;
     [SerializeField] public float dropForce;
     [SerializeField] public int tier;
+    [SerializeField] public int value;
+    [SerializeField] public int id;
     public string name;
     private int durability;
     public Sprite sprite;
@@ -18,7 +20,6 @@ public class Item : ScriptableObject
     public void Init()
     {
         durability = maxDurability;
-
     }
 
     public void useItem(Vector3 pos)
@@ -47,6 +48,6 @@ public class Item : ScriptableObject
 
     public bool isAlive()
     {
-        return durability>0;
+        return durability > 0;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DestructibleEnvironment : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class DestructibleEnvironment : MonoBehaviour
     [SerializeField] public int structTier;
     [SerializeField] private float dropForce;
     [SerializeField] private Item[] drops;
+    [SerializeField] private Text hp;
     private Transform parentOfDrops;
     private bool isAlive = true;
 
@@ -21,6 +23,8 @@ public class DestructibleEnvironment : MonoBehaviour
     public void lowerDurability(int levelOfDice)
     {
         durability -= levelOfDice;
+        hp.text = durability.ToString();
+
         if (durability <= 0 && isAlive)
         {
 
@@ -35,7 +39,7 @@ public class DestructibleEnvironment : MonoBehaviour
         {
             var item = ScriptableObject.Instantiate(drop);
             item.Init();
-            item.createPickup(transform.position);  
+            item.createPickup(transform.position);
         }
     }
 

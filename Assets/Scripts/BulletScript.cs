@@ -6,7 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     [SerializeField] private float bulletLifetime;
     [SerializeField] private float bulletForce;
-    [SerializeField] private int levelOfDice;
+    private int levelOfDice;
     private Item item;
     private bool firstEntered = false;
     private Vector2 direction;
@@ -44,9 +44,9 @@ public class BulletScript : MonoBehaviour
                 collision.gameObject.GetComponent<DestructibleEnvironment>().lowerDurability(999999);
                 if (!item.isAlive()) Destroy(gameObject);
             }
-            if (collision.gameObject.CompareTag("struct") && item.tier > collision.gameObject.GetComponent<DestructibleEnvironment>().structTier)
+            if (collision.gameObject.CompareTag("struct") && item.tier >= collision.gameObject.GetComponent<DestructibleEnvironment>().structTier)
             {
-                collision.gameObject.GetComponent<DestructibleEnvironment>().lowerDurability(levelOfDice);
+                collision.gameObject.GetComponent<DestructibleEnvironment>().lowerDurability(item.value+1);
                 item.subbDurability();
                 if (!item.isAlive()) Destroy(gameObject);
             }

@@ -3,58 +3,98 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-class MimicDice
-{
-    public List<Item> itemList = new List<Item>();
-
-}
-
 public class MimicLogic : MonoBehaviour
 {
-    [SerializeField] private List<MimicDice> mimicReq;
+
     [SerializeField] private GameObject[] listOfHUDSprites;
     [SerializeField] public Sprite hudSprite;
-    private List<Item> currReq = new List<Item>();
+    [SerializeField] public GameObject player;
+    [SerializeField] public GameObject hud;
+    [SerializeField] public float mimicRange;
+    public ChunkGenData chunkToUnlock;
+    public List<Item> requiredItems;
+    public Vector2 chunkIdx;
+    public GridGenerate gen;
+    private bool disabled;
 
     private void Start()
     {
-        var set = Random.Range(0, mimicReq.Count);
-        foreach (Item e in mimicReq[set].itemList)
-        {
-            currReq.Add(e);
-        }
+        player = GameObject.FindWithTag("Player");
+        gen = GameObject.FindWithTag("Generator").GetComponent<GridGenerate>();
         updateHUD();
     }
 
+    private void Update()
+    {
+        manageHUD();
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        for (int i = 0; i < currReq.Count; i++)
+        Item it = collision.gameObject.GetComponent<BulletScript>()?.getItem();
+        if (it != null)
         {
-            if (collision.gameObject.GetComponent<BulletScript>().getItem() == currReq[i])
+            var success = tryAddToMimic(it);
+            if (success)
             {
-                currReq.RemoveAt(i);
-                updateHUD();
                 Destroy(collision.gameObject);
             }
+            updateHUD();
         }
     }
 
+    private bool tryAddToMimic(Item item)
+    {
+        if (chunkToUnlock.reqItems.Count == 0)
+        {
+            gen.buyLand((int)chunkIdx.x, (int)chunkIdx.y, chunkToUnlock);
+            Destroy(gameObject);
+            return true;
+        }
+        if (item.name == chunkToUnlock.reqItems[requiredItems.Count].name)
+        {
+            requiredItems.Add(item);
+
+            if (requiredItems.Count == chunkToUnlock.reqItems.Count)
+            {
+                gen.buyLand((int)chunkIdx.x, (int)chunkIdx.y, chunkToUnlock);
+                Destroy(gameObject);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
     private void updateHUD()
     {
-        for (int i = 0; i < mimicReq[0].itemList.Count; i++)
+        for (int i = 0; i < listOfHUDSprites.Length; i++)
         {
-            if (currReq[i] != null)
+            if (i < requiredItems.Count)
             {
-                listOfHUDSprites[i].GetComponent<Image>().sprite = currReq[i].sprite;
-                listOfHUDSprites[i].GetComponent<Image>().color = currReq[i].color;
+                listOfHUDSprites[i].GetComponent<Image>().sprite = chunkToUnlock.reqItems[i].sprite;
+                listOfHUDSprites[i].GetComponent<Image>().color = chunkToUnlock.reqItems[i].color;
             }
             else
             {
                 listOfHUDSprites[i].GetComponent<Image>().sprite = hudSprite;
                 listOfHUDSprites[i].GetComponent<Image>().color = Color.white;
             }
+        }
+    }
+
+    private void manageHUD()
+    {
+        var playerPos = Vector3.Distance(player.transform.position, transform.position);
+        if (playerPos < mimicRange && disabled)
+        {
+            hud.SetActive(true);
+            disabled = false;
+        }
+        else if (playerPos > mimicRange && !disabled)
+        {
+            hud.SetActive(false);
+            disabled = true;
         }
     }
 }

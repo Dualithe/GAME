@@ -87,6 +87,8 @@ new Vector2(-1,-2),
 new Vector2(-2,-2)
         };
        Vector2 x = generator.getTileSize();
+        x.x -= 0.131f;
+        x.y -= 0.131f;
 
         foreach(Vector2 coord in coords)
         {

@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: CoalDiceItem
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: -7049295537494616724, guid: e7312c0060974d44cbb1357cdb99e547, type: 3}
-  pickupPrefab: {fileID: 3189098669740269285, guid: f959474b070a27841b35ad390b727d85, type: 3}
+  pickupPrefab: {fileID: 3189098669740269285, guid: 0e7681d4181b0a14caf1f3e5e4a2a242, type: 3}
   maxDurability: 3
   dropForce: 4
   tier: 3
+  value: 1
+  id: 6
   name: CoalDiceItem
-  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  color: {r: 1, g: 0.3254902, b: 0.2901961, a: 0}
+  sprite: {fileID: -6161035804578702525, guid: 999111efddef8dc468d2664fcc242292, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}

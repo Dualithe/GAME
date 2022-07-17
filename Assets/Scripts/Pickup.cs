@@ -39,6 +39,9 @@ public class Pickup : MonoBehaviour
 
     public void setItem(Item i)
     {
+        var x = GetComponent<SpriteRenderer>();
         item = i;
+        x.color = item.color;
+        x.sprite = item.sprite;
     }
 }
