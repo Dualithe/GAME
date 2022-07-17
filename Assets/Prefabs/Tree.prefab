@@ -291,6 +291,7 @@ MonoBehaviour:
   dropForce: 4
   drops:
   - {fileID: 11400000, guid: bb4eae86afc070647b9d25bdf7257729, type: 2}
+  - {fileID: 11400000, guid: dd6fa797ab9b52e4388a59324dd12d30, type: 2}
   hp: {fileID: 2733804032805213752}
 --- !u!114 &-8916249284030147152
 MonoBehaviour:
