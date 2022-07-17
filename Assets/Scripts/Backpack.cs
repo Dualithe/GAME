@@ -21,12 +21,14 @@ public class Backpack : MonoBehaviour
             eq[i].Init();
         }
 
-        //pm = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        // Debug.Log(GameObject.FindWithTag("Player"));
+        // pm = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         var alpha = uiBackpack.transform.GetChild(0).GetComponent<Image>().color;
         alpha.a += 0.25f;
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = alpha;
 
         updateHUD();
+        pm.UpdateCube(getHoveredItem());
     }
 
     public bool AddToEq(Item item)
@@ -55,6 +57,7 @@ public class Backpack : MonoBehaviour
         {
             children[i].GetComponent<EqSlot>().setItem(i < eq.Count ? eq[i] : null, i == hovered);
         }
+        pm.UpdateCube(getHoveredItem());
     }
 
     private void Update()
@@ -91,6 +94,8 @@ public class Backpack : MonoBehaviour
         var y = uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color;
         y.a += 0.25f;
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = y;
+
+        var it = getHoveredItem();
 
         updateHUD();
     }

@@ -9,13 +9,44 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     [SerializeField] private float playerSpeed;
 
+    [SerializeField] private Sprite[] dices;
+    [SerializeField] private SpriteRenderer dice;
+    private Backpack backpack;
+
+    int diceFrame = 0;
+
+    public void UpdateCube(Item it) {
+        dice.gameObject.SetActive(it != null);
+        UpdateCubeFrame();
+    }
+
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();
-        GameObject.FindWithTag("Backpack").GetComponent<Backpack>().pm = this;
+        backpack = GameObject.FindWithTag("Backpack").GetComponent<Backpack>();
+        backpack.pm = this;
         rb = GetComponent<Rigidbody2D>();
         if (playerObject == null)
             playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        StartCoroutine(PlayDiceAnimation());
+        UpdateCube(backpack.getHoveredItem());
+    }
+
+    private void UpdateCubeFrame() {
+        var it = backpack.getHoveredItem();
+        if (it != null) {
+            dice.sprite = dices[it.id * 6 + diceFrame];
+        }
+    }
+
+    IEnumerator PlayDiceAnimation() {
+        diceFrame = 0;
+        while (true) {
+            diceFrame = (diceFrame + 1) % 6;
+            UpdateCubeFrame();
+            yield return new WaitForSeconds(0.12f); 
+        }
     }
 
     void Update()
@@ -23,9 +54,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10;
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-
     }
+
+
+
     private void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
