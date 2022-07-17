@@ -53,7 +53,7 @@ public class Backpack : MonoBehaviour
 
         for (int i = 0; i < children.Count; i++)
         {
-            children[i].GetComponent<EqSlot>().setItem(i < eq.Count ? eq[i] : null);
+            children[i].GetComponent<EqSlot>().setItem(i < eq.Count ? eq[i] : null, i == hovered);
         }
     }
 
@@ -91,6 +91,8 @@ public class Backpack : MonoBehaviour
         var y = uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color;
         y.a += 0.25f;
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = y;
+
+        updateHUD();
     }
 
 
