@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    private string name;
+    private Item item;
     private Backpack bp;
 
     private Collider2D cl;
@@ -22,13 +22,23 @@ public class Pickup : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            bool added = bp.AddToEq(name);
+            bool added = bp.AddToEq(item);
             if (added)
             {
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void setVelocity(Vector2 vec)
+    {
+        GetComponent<Rigidbody2D>().velocity = vec;
+    }
+
+    public void setItem(Item i)
+    {
+        item = i;
     }
 }

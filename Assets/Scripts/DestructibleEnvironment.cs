@@ -5,39 +5,38 @@ using UnityEngine;
 public class DestructibleEnvironment : MonoBehaviour
 {
     [SerializeField] private int durability;
+    [SerializeField] public int structTier;
     [SerializeField] private float dropForce;
-    [SerializeField] private GameObject[] drops;
-    [SerializeField] private Transform parentOfDrops;
+    [SerializeField] private Item[] drops;
+    private Transform parentOfDrops;
+    private bool isAlive = true;
 
 
     private void Start()
     {
         parentOfDrops = GameObject.FindWithTag("parentOfDrops").transform;
+
     }
 
-    public void lowerDurability()
+    public void lowerDurability(int levelOfDice)
     {
-        durability--;
-    }
-
-    private void Update()
-    {
-        if (durability <= 0)
+        durability -= levelOfDice;
+        if (durability <= 0 && isAlive)
         {
+
+            dropItems();
             Destroy(gameObject);
+            isAlive = false;
+        }
+    }
+    public void dropItems()
+    {
+        foreach (var drop in drops)
+        {
+            var item = ScriptableObject.Instantiate(drop);
+            item.Init();
+            item.createPickup(transform.position);  
         }
     }
 
-    public void dropItems(int LevelOfDice)
-    {
-        float randomZ = Random.Range(0, 2 * Mathf.PI);
-        var drop = Random.Range(0, drops.Length);
-        for (int i = 0; i < LevelOfDice; i++)
-        {
-            float randomAngle = Random.Range(0, 2 * Mathf.PI);
-            var vec = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
-            var items = Instantiate(drops[drop], transform.position, Quaternion.Euler(0, 0, randomZ), parentOfDrops);
-            items.GetComponent<Rigidbody2D>().AddForce(vec * dropForce, ForceMode2D.Impulse);
-        }
-    }
 }

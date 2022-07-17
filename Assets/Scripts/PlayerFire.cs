@@ -11,6 +11,7 @@ public class PlayerFire : MonoBehaviour
 
     private void Start()
     {
+        bp = GameObject.FindWithTag("Backpack").GetComponent<Backpack>();
         Mathf.Clamp(atkCd, -1, 1000);
     }
 
@@ -20,10 +21,14 @@ public class PlayerFire : MonoBehaviour
         {
             if (atkCd <= 0)
             {
-                _bulletPrefab = bp.getHoveredItem();
-                var endPos = Camera.main.ScreenToWorldPoint((Vector2)Input.mousePosition);
-                var diceBullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
-                diceBullet.GetComponent<BulletScript>().setDirection(new Vector2(endPos.x, endPos.y) - (Vector2)transform.position);
+
+                var item = bp.getHoveredItem();
+                if (item != null)
+                {
+                    item.useItem(transform.position);
+                    bp.RemoveHoveredFromEq();
+
+                }
                 atkCd = startAtkCd;
             }
         }

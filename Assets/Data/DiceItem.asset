@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de12c1d637045d45bbdbc52e0c3c62c, type: 3}
+  m_Name: DiceItem
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: -7049295537494616724, guid: d41956de831a3664c8c30f1ca02b819e, type: 3}
+  pickupPrefab: {fileID: 3189098669740269285, guid: 4b57332cad56b8c42a2d81af64d6db02, type: 3}
+  maxDurability: 2
+  dropForce: 4
+  tier: 1
+  name: CommonDiceItem
+  sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  color: {r: 1, g: 0.3254902, b: 0.2901961, a: 0}

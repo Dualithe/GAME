@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6278010710802724130}
   m_Layer: 8
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: struct
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 10
+  structTier: 1
   dropForce: 4
   drops:
-  - {fileID: 8076094172454307311, guid: 4b57332cad56b8c42a2d81af64d6db02, type: 3}
-  parentOfDrops: {fileID: 0}
+  - {fileID: 11400000, guid: bb4eae86afc070647b9d25bdf7257729, type: 2}

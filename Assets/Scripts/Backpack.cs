@@ -5,44 +5,56 @@ using UnityEngine.UI;
 
 public class Backpack : MonoBehaviour
 {
-    private List<Item> eq = new List<Item>();
+    [SerializeField] public List<Item> eq = new List<Item>();
     [SerializeField] private GameObject uiBackpack;
     [SerializeField] private Transform parentOfDrops;
     [SerializeField] private new List<Text> children;
-    [SerializeField] private GameObject starterDice;
     private int hovered = 0;
-    private Item it;
 
     private void Start()
     {
-        var itm = new Item();
-        itm.name = "Starter Dice";
-        itm.ammount = 1;
-        itm.bullet = starterDice;
-        eq.Add(itm);
-        Mathf.Clamp(hovered, 0, 5);
+        for (int i = 0; i < eq.Count; i++)
+        {
+            eq[i] = ScriptableObject.Instantiate(eq[i]);
+            eq[i].Init();
+        }
+
         var alpha = uiBackpack.transform.GetChild(0).GetComponent<Image>().color;
         alpha.a += 0.25f;
         uiBackpack.transform.GetChild(hovered).GetComponent<Image>().color = alpha;
 
-        it = uiBackpack.GetComponentInChildren<Item>();
-
+        updateHUD();
     }
 
-    public bool AddToEq(string nameOfItem)
+    public bool AddToEq(Item item)
     {
         if (eq.Count < 6)
         {
-            var it = new Item();
-            it.name = nameOfItem;
-            eq.Add(it);
-            children[eq.Count].text = nameOfItem;
-            children[eq.Count].text = nameOfItem;
+            eq.Add(item);
+            updateHUD();
             return true;
         }
         else return false;
     }
 
+    public void RemoveHoveredFromEq()
+    {
+        eq.RemoveAt(hovered);
+        updateHUD();
+
+    }
+
+    public void updateHUD()
+    {
+        for (int i = 0; i < children.Count; i++)
+        {
+            if (i < eq.Count)
+            {
+                children[i].text = eq[i].name;
+            }
+            else children[i].text = "X";
+        }
+    }
 
     private void Update()
     {
@@ -60,6 +72,7 @@ public class Backpack : MonoBehaviour
     {
         int noLongerHovered = hovered;
         hovered += i;
+        hovered = Mathf.Clamp(hovered, 0, 5);
 
         var x = uiBackpack.transform.GetChild(noLongerHovered).GetComponent<Image>().color;
         x.a -= 0.25f;
@@ -71,9 +84,13 @@ public class Backpack : MonoBehaviour
     }
 
 
-    public GameObject getHoveredItem()
+    public Item getHoveredItem()
     {
-        return eq[hovered].bullet;
+        if (hovered < eq.Count)
+        {
+            return eq[hovered];
+        }
+        return null;
     }
 
 }

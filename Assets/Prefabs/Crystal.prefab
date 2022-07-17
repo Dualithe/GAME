@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1470208654477378004}
   - component: {fileID: 157001394498613244}
   - component: {fileID: -4430321411919910882}
+  - component: {fileID: -6022034453349077498}
   m_Layer: 8
   m_Name: Crystal
-  m_TagString: Untagged
+  m_TagString: struct
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,3 +100,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
+--- !u!114 &-6022034453349077498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3264983173766608745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4476e4f2d3f76b43b64666a3287fcce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  durability: 200
+  structTier: 5
+  dropForce: 4
+  drops:
+  - {fileID: 11400000, guid: 068bb0ff22012814d88cedbb1facefc6, type: 2}
