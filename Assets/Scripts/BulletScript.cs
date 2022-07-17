@@ -69,7 +69,7 @@ public class BulletScript : MonoBehaviour
                 if (item.tier == 0 && env.name.Contains("Fire")) {
                     env.lowerDurability(999999);
                 }
-                else if (item.tier >= env.structTier) {
+                if (item.tier >= env.structTier) {
                     env.lowerDurability(item.value+1);
                     item.subbDurability();
                     if (!item.isAlive()) Destroy(gameObject);
