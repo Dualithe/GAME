@@ -24,7 +24,6 @@ public class DestructibleEnvironment : MonoBehaviour
     {
         durability -= levelOfDice;
         hp.text = durability.ToString();
-
         if (durability <= 0 && isAlive)
         {
             dropItems();

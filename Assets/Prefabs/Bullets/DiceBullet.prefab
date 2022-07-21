@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLifetime: 1
   bulletForce: 15
+  fireAlt: {fileID: 5784278045246095708, guid: d5ad91c1429c2eb4fb3fdf37ce26c050, type: 3}
   diceSprites:
   - {fileID: -5100727190283968245, guid: 999111efddef8dc468d2664fcc242292, type: 3}
   - {fileID: 1614935192214253311, guid: 999111efddef8dc468d2664fcc242292, type: 3}

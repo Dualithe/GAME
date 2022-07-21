@@ -16,8 +16,8 @@ MonoBehaviour:
   pickupPrefab: {fileID: 3189098669740269285, guid: 0e7681d4181b0a14caf1f3e5e4a2a242, type: 3}
   maxDurability: 12
   dropForce: 4
-  tier: 3
-  value: 1
+  tier: 5
+  value: 4
   id: 9
   name: CrystalDiceItem
   sprite: {fileID: -6161035804578702525, guid: 999111efddef8dc468d2664fcc242292, type: 3}

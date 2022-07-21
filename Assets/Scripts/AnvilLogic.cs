@@ -21,18 +21,25 @@ public class AnvilLogic : MonoBehaviour
     [SerializeField] public GameObject hud;
     [SerializeField] public GameObject enchantedAnvil;
     [SerializeField] public GameObject[] hudItems;
+    [SerializeField] private GameObject[] slots;
     [SerializeField] public Sprite hudSprite;
+    [SerializeField] private Sprite[] diceSprites;
     private List<Item> storedInAnvil = new List<Item>();
     public float playerPos;
     public GameObject player;
-    private bool disabled = true;
-
+    int diceFrame = 0;
 
     private void Start()
     {
         bp = GameObject.FindWithTag("Backpack").GetComponent<Backpack>();
         player = GameObject.FindWithTag("Player");
         parentOfDrops = GameObject.FindWithTag("parentOfDrops").transform;
+        StartCoroutine(PlayDiceAnimation());
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].transform.GetChild(0).gameObject.SetActive(false);
+        }
+        hud.SetActive(false);
     }
 
     private void Update()
@@ -81,7 +88,9 @@ public class AnvilLogic : MonoBehaviour
             {
                 if (item.name == rec.recipe[storedInAnvil.Count].name)
                 {
+                    slots[storedInAnvil.Count].transform.GetChild(0).gameObject.SetActive(true);
                     storedInAnvil.Add(item);
+                    updateHUD();
 
                     if (storedInAnvil.Count == rec.recipe.Count)
                     {
@@ -103,11 +112,14 @@ public class AnvilLogic : MonoBehaviour
                             Destroy(gameObject);
                         }
                         storedInAnvil.Clear();
+                        for (int i = 0; i < slots.Length; i++)
+                        {
+                            slots[i].transform.GetChild(0).gameObject.SetActive(false);
+                        }
                     }
                     checkIfHUDUpdated();
                     return true;
                 }
-
             }
         }
         return false;
@@ -116,15 +128,13 @@ public class AnvilLogic : MonoBehaviour
     private void manageHUD()
     {
         playerPos = Vector3.Distance(player.transform.position, transform.position);
-        if (playerPos < anvilRange && disabled)
+        if (playerPos < anvilRange)
         {
             hud.SetActive(true);
-            disabled = false;
         }
-        else if (playerPos > anvilRange && !disabled)
+        else if (playerPos > anvilRange)
         {
             hud.SetActive(false);
-            disabled = true;
         }
     }
 
@@ -141,6 +151,27 @@ public class AnvilLogic : MonoBehaviour
             {
                 hudItems[i].GetComponent<Image>().sprite = hudSprite;
                 hudItems[i].GetComponent<Image>().color = Color.white;
+            }
+        }
+    }
+
+    private IEnumerator PlayDiceAnimation()
+    {
+        while (true)
+        {
+            diceFrame = (diceFrame + 1) % 6;
+            updateHUD();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    private void updateHUD()
+    {
+        for (int i = 0; i < slots.Length; ++i)
+        {
+            if (i < storedInAnvil.Count)
+            {
+                var diceId = storedInAnvil[i].id;
+                slots[i].transform.GetChild(0).GetComponent<Image>().sprite = diceSprites[diceId * 6 + (diceFrame + i) % 6];
             }
         }
     }

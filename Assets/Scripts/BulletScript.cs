@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour
 {
     [SerializeField] private float bulletLifetime;
     [SerializeField] private float bulletForce;
+    [SerializeField] private Sprite fireAlt;
     private int levelOfDice;
     private Item item;
     private Vector2 direction;
@@ -67,7 +68,8 @@ public class BulletScript : MonoBehaviour
             if (!structuresDamaged.Contains(structId)) {
                 structuresDamaged.Add(structId);
                 if (item.tier == 0 && env.name.Contains("Fire")) {
-                    env.lowerDurability(999999);
+                    env.GetComponent<BoxCollider2D>().isTrigger = true;
+                    env.GetComponent<SpriteRenderer>().sprite = fireAlt;
                 }
                 if (item.tier >= env.structTier) {
                     env.lowerDurability(item.value+1);

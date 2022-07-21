@@ -25,19 +25,23 @@ public class MimicLogic : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         gen = GameObject.FindWithTag("Generator").GetComponent<GridGenerate>();
-        updateHUD();
     }
 
-    public void SetChunkToUnlock(ChunkGenData chunk) {
+    public void SetChunkToUnlock(ChunkGenData chunk)
+    {
         chunkToUnlock = chunk;
         StartCoroutine(PlayDiceAnimation());
     }
 
-    private IEnumerator PlayDiceAnimation() {
-        while(true) {
+    private IEnumerator PlayDiceAnimation()
+    {
+        while (true)
+        {
             diceFrame = (diceFrame + 1) % 6;
-            for (int i = 0; i < slots.Length; ++i) {
-                if (i >= requiredItems.Count) {
+            for (int i = 0; i < slots.Length; ++i)
+            {
+                if (i >= requiredItems.Count)
+                {
                     var diceId = chunkToUnlock.reqItems[i].id;
                     slots[i].transform.GetChild(0).GetComponent<Image>().sprite = diceSprites[diceId * 6 + (diceFrame + i) % 6];
                 }
@@ -61,7 +65,6 @@ public class MimicLogic : MonoBehaviour
             {
                 Destroy(collision.gameObject);
             }
-            updateHUD();
         }
     }
 
@@ -88,26 +91,6 @@ public class MimicLogic : MonoBehaviour
         }
         return false;
     }
-
-
-    private void updateHUD()
-    {
-        // for (int i = 0; i < slots.Length; i++)
-        // {
-        //     var diceId = chunkToUnlock.reqItems[i].id;
-        //     if (i < requiredItems.Count)
-        //     {
-        //         slots[i].GetComponent<Image>().sprite = diceSprites[diceId * 6];
-        //         // slots[i].GetComponent<Image>().color = chunkToUnlock.reqItems[i].color;
-        //     }
-        //     else
-        //     {
-        //         slots[i].GetComponent<Image>().sprite = hudSprite;
-        //         // slots[i].GetComponent<Image>().color = Color.white;
-        //     }
-        // }
-    }
-
     private void manageHUD()
     {
         var playerPos = Vector3.Distance(player.transform.position, transform.position);
